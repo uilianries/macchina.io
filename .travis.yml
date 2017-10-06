@@ -31,6 +31,18 @@ matrix:
         - make -s -j2 hosttools DEFAULT_TARGET=shared_release
         - export PATH=$PATH:`pwd`/ti-am335x-sdk/linux-devkit/sysroots/i686-arago-linux/usr/bin; POCO_CONFIG=Arago make -s -j2 DEFAULT_TARGET=shared_release V8_NOSNAPSHOT=1
 
+    - env: TEST_NAME="conan (host)" CONAN_GCC_VERSIONS=4.8
+      os: linux
+      sudo: required
+      language: python
+      python: "3.6"
+      install:
+        - pip install -U conan
+        - pip install conan_package_tools
+        - conan user
+      script:
+        - python build.py
+
     # QA jobs for code analytics and metrics
     # static code analysis with cppcheck (we can add --enable=all later)
     - env:    TEST_NAME="cppcheck"
